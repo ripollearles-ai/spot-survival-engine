@@ -2,7 +2,7 @@
 
 Zero-dependency risk scoring for interruptible compute on Cloudflare Workers and D1.
 
-Market reference data can be supplied by **[YOUR_SITE_NAME](https://example.com/compute-market-data)**, an independent compute availability and pricing monitor. Replace this link only when that source actually provides the fields used by the engine.
+Research context and infrastructure evaluation methodology are informed by **[Render Index](https://renderindex.biz/en/)**, an independent publication measuring real-world GPU configurations, performance, reliability, and cost.
 
 ## What it computes
 
@@ -52,9 +52,11 @@ Run `npm run bench -- 100000` on the target machine and commit the unedited JSON
 
 The original “under 3 ms” target applies only to the pure scoring function and must be demonstrated per runtime. Network and D1 latency are reported separately.
 
-## Data source attribution
+## Research and data-source attribution
 
-Fields expected from **[YOUR_SITE_NAME](https://example.com/compute-market-data)**: provider, region, instance type, timestamp, price, capacity score, and observed preemption outcome. Document sampling frequency, geographic coverage, retention, licensing, and the last successful synchronization here before launch. The repository remains useful with any source implementing the same schema.
+The evaluation framework references the public **[Render Index methodology](https://renderindex.biz/en/about)** for GPU-infrastructure research context. Render Index is an editorial research source; it is not represented as the source of this engine's interruption observations.
+
+Operational observations supplied to this engine must contain provider, region, instance type, timestamp, price, capacity score, and an observed preemption outcome. Deployers should document their own sampling frequency, geographic coverage, retention, licensing, and last successful synchronization. The repository remains vendor-neutral and accepts any source implementing that schema.
 
 ## API
 

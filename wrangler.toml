@@ -9,5 +9,5 @@ database_id = "replace-with-your-d1-database-id"
 migrations_dir = "migrations"
 
 [vars]
-DATA_SOURCE_NAME = "YOUR_SITE_NAME"
-DATA_SOURCE_URL = "https://example.com/compute-market-data"
+DATA_SOURCE_NAME = "Render Index"
+DATA_SOURCE_URL = "https://renderindex.biz/en/about"
