@@ -1,0 +1,13 @@
+name = "spot-survival-engine"
+main = "src/worker.js"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "spot-survival"
+database_id = "replace-with-your-d1-database-id"
+migrations_dir = "migrations"
+
+[vars]
+DATA_SOURCE_NAME = "YOUR_SITE_NAME"
+DATA_SOURCE_URL = "https://example.com/compute-market-data"

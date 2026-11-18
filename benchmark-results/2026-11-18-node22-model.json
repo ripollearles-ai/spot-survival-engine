@@ -1,0 +1,10 @@
+{
+  "scope": "model-only; excludes Worker, network and D1",
+  "runtime": "v22.12.0",
+  "rounds": 100000,
+  "p50Ms": 0.0032,
+  "p95Ms": 0.004,
+  "p99Ms": 0.0069,
+  "recordedAt": "2026-11-18",
+  "command": "node scripts/bench.mjs 100000"
+}
