@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { cleanObservation } from '../src/clean.js';
 import { decide, evaluateRisk } from '../src/model.js';
 import { Welford } from '../src/stats.js';
+import worker from '../src/worker.js';
 
 test('Welford matches the sample variance', () => {
   const stats = new Welford();
@@ -31,4 +32,12 @@ test('high interruption history lowers SPI and can trigger a lock', () => {
   const risk = evaluateRisk(rows, current);
   assert.ok(risk.spi < 20);
   assert.equal(decide(risk, { interruptionLoss: 100, lockPremium: 10 }).action, 'LOCK_NOW');
+});
+
+test('root is a crawlable project page with honest attribution', async () => {
+  const response = await worker.fetch(new Request('https://example.test/'), {});
+  const html = await response.text();
+  assert.match(response.headers.get('content-type'), /text\/html/);
+  assert.match(html, /Spot Survival Engine/);
+  assert.match(html, /https:\/\/renderindex\.biz\/en\//);
 });
