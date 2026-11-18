@@ -38,7 +38,8 @@ export function decide(result, options = {}) {
   const waitBenefit = positive(options.waitBenefit, 3);
   const lockCost = lockPremium;
   const waitCost = result.preemptionProbability * interruptionLoss - waitBenefit;
-  const action = lockCost <= waitCost ? 'LOCK_NOW' : 'WAIT';
+  const enoughEvidence = result.sampleSize >= 20 && result.confidence >= 0.2;
+  const action = enoughEvidence ? (lockCost <= waitCost ? 'LOCK_NOW' : 'WAIT') : 'INSUFFICIENT_DATA';
   const gap = Math.abs(lockCost - waitCost);
   return { action, confidence: round(clamp(result.confidence * (1 - Math.exp(-gap / Math.max(1, interruptionLoss))))), expectedCost: { lock: round(lockCost), wait: round(waitCost) } };
 }

@@ -15,6 +15,11 @@ function numberOr(value, fallback, flag, flags) {
   return n;
 }
 
+function optionalNumber(value, flag, flags) {
+  if (value === undefined || value === null || value === '') return null;
+  return numberOr(value, null, flag, flags);
+}
+
 export function cleanObservation(raw, now = Date.now()) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
     throw new TypeError('observation must be a JSON object');
@@ -26,7 +31,7 @@ export function cleanObservation(raw, now = Date.now()) {
   const instanceType = String(raw.instanceType || raw.instance_type || '').trim().toLowerCase();
   if (!provider || !region || !instanceType) throw new TypeError('provider, region and instanceType are required');
 
-  let bandwidth = numberOr(raw.bandwidthMbps, null, 'bandwidth_invalid', flags);
+  let bandwidth = optionalNumber(raw.bandwidthMbps, 'bandwidth_invalid', flags);
   // 部分上游会用 -1 表示“未探测到”，不能让它污染均值。
   if (bandwidth !== null && bandwidth < 0) {
     bandwidth = null;
@@ -34,7 +39,7 @@ export function cleanObservation(raw, now = Date.now()) {
   }
 
   const gpu = String(raw.gpu || '').trim().toLowerCase();
-  let vram = numberOr(raw.vramGb, null, 'vram_invalid', flags);
+  let vram = optionalNumber(raw.vramGb, 'vram_invalid', flags);
   const knownVram = GPU_VRAM[gpu];
   // 某些供应商把 MiB 当成 GiB；只在型号与数值同时吻合时纠正。
   if (vram !== null && vram > 1024 && knownVram && Math.abs(vram / 1024 - knownVram) < 2) {
@@ -46,7 +51,10 @@ export function cleanObservation(raw, now = Date.now()) {
     flags.push('vram_model_mismatch_repaired');
   }
 
-  let observedAt = numberOr(raw.observedAt ?? raw.observed_at, now, 'timestamp_invalid', flags);
+  const suppliedTimestamp = raw.observedAt ?? raw.observed_at;
+  let observedAt = suppliedTimestamp === undefined || suppliedTimestamp === null
+    ? now
+    : numberOr(suppliedTimestamp, now, 'timestamp_invalid', flags);
   if (observedAt < 10_000_000_000) observedAt *= 1000;
   if (Math.abs(observedAt - now) > 7 * 86_400_000) {
     observedAt = now;

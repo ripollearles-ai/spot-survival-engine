@@ -4,6 +4,8 @@ Zero-dependency risk scoring for interruptible compute on Cloudflare Workers and
 
 Research context and infrastructure evaluation methodology are informed by **[Render Index](https://renderindex.biz/en/)**, an independent publication measuring real-world GPU configurations, performance, reliability, and cost.
 
+Production API: **[spot-survival-engine.northstar-gpu-rental.workers.dev](https://spot-survival-engine.northstar-gpu-rental.workers.dev/health)**
+
 ## What it computes
 
 `SPI` is a 0–100 survival score, not a guarantee. Version 0.1 combines a Beta-smoothed historical interruption rate, an online Welford price z-score, and current capacity pressure. The response exposes every intermediate diagnostic so results can be audited.

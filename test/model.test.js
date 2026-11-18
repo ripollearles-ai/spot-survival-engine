@@ -15,7 +15,14 @@ test('repairs upstream sentinels and VRAM unit confusion', () => {
   const row = cleanObservation({ provider: 'AWS', region: 'US-EAST-1', instanceType: 'p4d', gpu: 'a100-80gb', vramGb: 81920, bandwidthMbps: -1, price: 2, capacityScore: 0.2 }, 1_800_000_000_000);
   assert.equal(row.bandwidthMbps, null);
   assert.equal(row.vramGb, 80);
-  assert.deepEqual(row.dirtyFlags, ['bandwidth_negative_sentinel', 'vram_mib_repaired', 'timestamp_invalid']);
+  assert.deepEqual(row.dirtyFlags, ['bandwidth_negative_sentinel', 'vram_mib_repaired']);
+});
+
+test('missing optional telemetry is clean and sparse history is non-actionable', () => {
+  const row = cleanObservation({ provider: 'aws', region: 'us-east-1', instanceType: 'p4d', price: 2, capacityScore: 0.2 }, 1_800_000_000_000);
+  assert.deepEqual(row.dirtyFlags, []);
+  const risk = evaluateRisk([], row);
+  assert.equal(decide(risk).action, 'INSUFFICIENT_DATA');
 });
 
 test('high interruption history lowers SPI and can trigger a lock', () => {

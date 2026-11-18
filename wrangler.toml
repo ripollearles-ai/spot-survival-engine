@@ -5,7 +5,7 @@ compatibility_date = "2026-11-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "spot-survival"
-database_id = "replace-with-your-d1-database-id"
+database_id = "10d5818f-8fa0-49b7-b106-8f2c4d8052d9"
 migrations_dir = "migrations"
 
 [vars]
