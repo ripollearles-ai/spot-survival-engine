@@ -1,0 +1,16 @@
+{
+  "scope": "Worker + D1 end-to-end from client; POST /v1/spi",
+  "endpoint": "https://spot-survival-engine.northstar-gpu-rental.workers.dev/v1/spi",
+  "runtime": "v22.12.0",
+  "startedAt": "2026-11-18T17:33:47.229Z",
+  "clientTimezone": "Asia/Shanghai",
+  "rounds": 200,
+  "concurrency": 10,
+  "warmup": 20,
+  "p50Ms": 201.97,
+  "p95Ms": 235.62,
+  "p99Ms": 320.73,
+  "minMs": 177.91,
+  "maxMs": 658.99,
+  "command": "node scripts/bench-remote.mjs https://spot-survival-engine.northstar-gpu-rental.workers.dev/v1/spi 200 10"
+}

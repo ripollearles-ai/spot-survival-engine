@@ -50,9 +50,9 @@ Run `npm run bench -- 100000` on the target machine and commit the unedited JSON
 | Scope | P50 | P95 | P99 |
 |---|---:|---:|---:|
 | Local model-only (Node 22.12.0, 100k runs, 2026-11-18) | 0.0032 ms | 0.0040 ms | 0.0069 ms |
-| Worker + D1 end-to-end | pending deployed run | pending deployed run | pending deployed run |
+| Worker + D1 end-to-end (200 requests, concurrency 10, 2026-11-19) | 201.97 ms | 235.62 ms | 320.73 ms |
 
-The original “under 3 ms” target applies only to the pure scoring function and must be demonstrated per runtime. Network and D1 latency are reported separately.
+The production row was measured from a client against `POST /v1/spi`, including internet transit, Worker execution, and a D1 read after 20 warm-up requests. Reproduce it with `npm run bench:remote -- <endpoint> 200 10`. The original “under 3 ms” target applies only to the pure scoring function; network and D1 latency are reported separately.
 
 ## Research and data-source attribution
 
@@ -73,4 +73,4 @@ The coefficients are an explicit baseline, not a universally calibrated cloud-ma
 
 ## License
 
-Choose and add a license before public distribution.
+MIT License. See [LICENSE](LICENSE) for details.
